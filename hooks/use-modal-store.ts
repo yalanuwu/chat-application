@@ -9,8 +9,8 @@ interface ModalData{
 
 interface ModalStore{
     type: ModalType | null;
-    data: ModalData;
     isOpen: boolean;
+    data: ModalData;
     onOpen: (type: ModalType, data?: ModalData) => void;
     onClose: () => void;
 }

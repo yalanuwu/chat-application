@@ -6,12 +6,12 @@ import {
     DialogHeader,
     DialogTitle
 } from "@/components/ui/dialog"
-import { useModal } from "@/components/hooks/use-modal-store";
+import { useModal } from "@/hooks/use-modal-store";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Check, Copy, RefreshCw } from "lucide-react";
-import { useOrigin } from "@/components/hooks/use-origin";
+import { useOrigin } from "@/hooks/use-origin";
 import { useState } from "react";
 import axios from "axios";
 
@@ -42,7 +42,7 @@ export const InviteModal = () =>{
             setIsLoading(true);
             const response = await axios.patch(`/api/servers/${server?.id}/invite-code`);
 
-            onOpen("invite", {serever: response.data });
+            onOpen("invite", {server: response.data });
         } catch (error) {
           console.log(error);
         } finally {
@@ -61,7 +61,7 @@ export const InviteModal = () =>{
                 </DialogHeader>
                 <div className="p-6">
                    <Label 
-                    className="uppercase text-xs font-bold text-xinc-500 dark:text-secondary/70"
+                    className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70"
                    >
                     Server Invite Link
                    </Label>

@@ -25,7 +25,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FileUpload } from "../file-upload";
 import { useRouter } from "next/navigation";
-import { useModal } from "@/components/hooks/use-modal-store";
+import { useModal } from "@/hooks/use-modal-store";
 
 const formSchema = z.object({
     name: z.string().min(1, {
