@@ -32,7 +32,7 @@ export const ServerMemeber = ({
     const icon = roleIconMap[member.role];
 
     const onClick = () => {
-        router.push('/servers/${params?.serverID}/Conversations/${member.id}')
+        router.push(`/servers/${params?.serverId}/Conversations/${member.id}`)
     }
 
     return (
@@ -50,7 +50,7 @@ export const ServerMemeber = ({
             <p
             className={cn(
                 "font-semibold text-sm text-zinc-500 group-hover:text-zinc-600 dark:text-zinc-400 dark:group-hover:text-zinc-300 transition",
-                params?.channelId === member.id && "text-primary dark:text-zinc-200 dark:group-hover:text-white"
+                params?.memberId === member.id && "text-primary dark:text-zinc-200 dark:group-hover:text-white"
             )}
             >
                 {member.profile.name}

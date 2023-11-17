@@ -2,14 +2,14 @@ import { redirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 import { currentProfile } from "@/lib/current-profile";
-import { Chatheader } from "@/components/chat/chat-header";
+import { ChatHeader } from "@/components/chat/chat-header";
 import { db } from "@/lib/db";
 
 
 
 
 
-interfaceChannelIdPageProps{
+interface ChannelIdPageProps{
     params: {
         serverId: string;
         channelId: string;
@@ -22,7 +22,7 @@ const ChannelIDPage = async ({
     const profile = await currentProfile();
 
     if (!profile) {
-        return.redirectToSign();
+        return redirectToSignIn();
     }
 
     const channel = await db.channel.findUnique({
@@ -33,8 +33,8 @@ const ChannelIDPage = async ({
 
     const member = await db.member.findFirst({
         where:{
-            serverID: params.serverId,
-            profileId: profile;else.id,
+            serverId: params.serverId,
+            profileId: profile.id,
         }
     });
 
@@ -43,10 +43,10 @@ const ChannelIDPage = async ({
     }
 
     return (
-        <div classname="bg-white dark:bg-[#313338] flex flex-col h-full">
-            <Chatheader 
+        <div className="bg-white dark:bg-[#313338] flex flex-col h-full">
+            <ChatHeader
              name={channel.name}
-             serverId={channel.serviceID}
+             serverId={channel.serverId}
              type="channel"
             />
         </div>

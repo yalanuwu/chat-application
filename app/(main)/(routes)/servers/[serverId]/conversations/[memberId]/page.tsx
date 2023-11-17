@@ -1,22 +1,22 @@
 import { redirectToSignIn } from "@clerk/nextjs"
 import { redirect } from "next/navigation";
 
-import { getorcreateConversation } from "@/lib/conversation"
+import { getOrCreateConversation } from "@/lib/conversation"
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
-import { Chatheader } from "@/components/chat/chat-header";
+import { ChatHeader } from "@/components/chat/chat-header";
 
 interface MemberIdPageProps {
     params: {
         memberID: string;
-        serverId: string:
+        serverId: string;
     }
 
 }
 
-const MemberIdPage = ({
+const MemberIdPage = async ({
     params 
-}: MembersIdPageProps) => {
+}: MemberIdPageProps) => {
     const profile = await currentProfile();
 
     if (!profile) {
@@ -26,7 +26,7 @@ const MemberIdPage = ({
     const currentMember = await db.member.findFirst({
         where: {
             serverId: params.serverId,
-            profile: profile.id.
+            profileId: profile.id,
         },
         include: {
             profile: true,
@@ -34,26 +34,26 @@ const MemberIdPage = ({
     });
 
     if (!currentMember) {
-        return redirectToSignIn("/");
+        return redirect("/");
     }
 
-    const conversation = await getorcreateCOnversation(currentMember.id, params.memberID);
+    const conversation = await getOrCreateConversation(currentMember.id, params.memberID);
 
     if (!conversation) {
-        return redirectToSignIn('/servers/${params.serverID}');
+        return redirect(`/servers/${params.serverId}`);
     }
 
     const { memberOne, memberTwo } = conversation;
 
-    const otherMember = memberOne.profileIf === profile.id ? memberTwo: memberOne;
+    const otherMember = memberOne.profileId === profile.id ? memberTwo: memberOne;
 
     return (
-        <div classname="bg-white dark:bg-[#313338] flex flex-col
+        <div className="bg-white dark:bg-[#313338] flex flex-col
         h-full">
-            <Chatheader 
+            <ChatHeader 
              imageUrl={otherMember.profile.imageUrl}
              name={otherMember.profile.name}
-             serverID={params.serverID}
+             serverId={params.serverId}
              type="conversation"
             />
 

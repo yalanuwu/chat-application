@@ -1,18 +1,20 @@
 import { db } from "@/lib/db";
 
-export constgetorcreateConversation = async (memberOneId: s]string, memberTwoId: string) => {
+export const getOrCreateConversation = async (memberOneId: string, memberTwoId: string) => {
     let conversation = await findConversation(memberOneId, memberTwoId) || await
-    findConversation(memberTwoid, memberOneId);
+    findConversation(memberTwoId, memberOneId);
 
     if (!conversation) {
         conversation = await createNewConversation(memberOneId, memberTwoId);
     }
+
+    return conversation;
 }
 
 const findConversation = async (memberOneId: string, memberTwoId:
 string) => {
-    try[{
-    return await db.findConversation.findFirst({
+    try{
+    return await db.conversation.findFirst({
         where: {
             AND:[
                 { memberOneId: memberOneId },

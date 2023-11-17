@@ -4,19 +4,19 @@ import { redirect } from "next/navigation";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 
-interface ServerIdPage {
+interface ServerIdPageProps {
     params: {
         serverId: string;
     }
 };
 
-const ServerIdPage = async() => ({
+const ServerIdPage = async ({
     params
 }: ServerIdPageProps) => {
     const profile = await currentProfile();
 
     if (!profile) {
-        return redirectTosignIn();
+        return redirectToSignIn();
     }
 
     const server = await db.server.findUnique({
@@ -24,7 +24,7 @@ const ServerIdPage = async() => ({
             id: params.serverId,
             members:{
                 some:{
-                    profilID: profile.id,
+                    profileId: profile.id,
                 }
             }
         },
@@ -48,6 +48,6 @@ const ServerIdPage = async() => ({
 
 
 
-    return redirect('/servers/${params.serverId}/channels/${initialChannel?.id}')
+    return redirect(`/servers/${params.serverId}/channels/${initialChannel?.id}`)
 }  
 export default ServerIdPage;
