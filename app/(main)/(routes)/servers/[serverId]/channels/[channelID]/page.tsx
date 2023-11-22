@@ -3,8 +3,8 @@ import { redirect } from "next/navigation";
 
 import { currentProfile } from "@/lib/current-profile";
 import { ChatHeader } from "@/components/chat/chat-header";
+import { ChatInput } from "@/components/chat/chat-input";
 import { db } from "@/lib/db";
-
 
 
 
@@ -49,6 +49,18 @@ const ChannelIDPage = async ({
              serverId={channel.serverId}
              type="channel"
             />
+            <div className="flex-1">Future messages</div>
+         <ChatInput
+         name={channel.name}
+         type="channel"
+         apiUrl="/api/socket/messages"
+         query={{
+            channelId: channel.id,
+            serverId:channel.serverId,
+
+         }}
+         />
+        
         </div>
     );
 

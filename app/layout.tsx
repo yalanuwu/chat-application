@@ -6,6 +6,9 @@ import { ClerkProvider } from '@clerk/nextjs'
 import { cn } from '@/lib/utils'
 import { ThemeProvider } from '@/components/providers/theme-provider'
 import { ModalProvider } from '@/components/providers/modal-provider'
+import { Socket } from 'socket.io'
+import {SocketProvider } from '@/components/providers/socket-provider'
+
 
 const font = Open_Sans({ subsets: ['latin'] })
 
@@ -24,8 +27,10 @@ export default function RootLayout({
       <html lang="en" suppressHydrationWarning>
         <body className={cn(font.className, 'bg-white dark:bg-[#313338]')}>
           <ThemeProvider attribute='class' defaultTheme='dark' enableSystem={false} storageKey='discord-theme'>
-            <ModalProvider />
-            {children}
+            <SocketProvider>
+              <ModalProvider />
+              {children}
+            </SocketProvider>
           </ThemeProvider>
         </body>
       </html>
